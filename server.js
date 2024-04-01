@@ -11,10 +11,13 @@ import connectDb from "./db/connect.js";
 import authRoutes from "./routes/authRoutes.js";
 const app = express();
 // rest of packages
+import cookieParser from "cookie-parser";
 import morgan from "morgan";
 app.use(express.json());
 app.use(morgan("tiny"));
+app.use(cookieParser());
 app.get("/", (req, res) => {
+  console.log(req.cookies);
   res.send("e commerce");
 });
 app.use("/api/auth", authRoutes);
