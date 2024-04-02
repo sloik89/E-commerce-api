@@ -16,6 +16,7 @@ const register = async (req, res) => {
     email: user.email,
     password: user.password,
     role: user.role,
+    _id: user._id,
   };
   attachCokkieToResponse(res, userToken);
 
@@ -41,6 +42,7 @@ const login = async (req, res) => {
     email: user.email,
     password: user.password,
     role: user.role,
+    _id: user._id,
   };
 
   attachCokkieToResponse(res, userToken);

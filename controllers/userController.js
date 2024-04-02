@@ -3,6 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import BadRequest from "../errors/bad-request.js";
 import NotFound from "../errors/not-found.js";
 const getAllUsers = async (req, res) => {
+  console.log(req.user);
   const users = await User.find({ role: "user" }).select("-password");
   if (!users) {
     throw new BadRequest("There is no users");
