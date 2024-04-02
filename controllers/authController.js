@@ -22,6 +22,7 @@ const register = async (req, res) => {
   res.status(StatusCodes.CREATED).json({ user: userToken });
 };
 const login = async (req, res) => {
+  console.log(req.body);
   const { email, password } = req.body;
   if (!email || !password) {
     throw new BadRequest("Please provide email or password");
@@ -34,6 +35,7 @@ const login = async (req, res) => {
   if (!pswdIsMatch) {
     throw new UnauthenticatedError("Wrong password");
   }
+
   const userToken = {
     name: user.name,
     email: user.email,
@@ -45,9 +47,11 @@ const login = async (req, res) => {
   res.status(StatusCodes.OK).json({ msg: "login succesfull" });
 };
 const logout = async (req, res) => {
+  const verify = jwt.verify(req.cookies.token, process.env.JWT_SECRET);
+  console.log(verify);
   res.cookie("token", "logout", {
     httpOnly: true,
-    expires: new Date(Date.now() + 5 * 1000),
+    expires: new Date(Date.now()),
   });
   res.status(StatusCodes.OK).json({ msg: "user logout" });
 };

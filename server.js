@@ -9,6 +9,7 @@ import errorHandler from "./middleware/error-handler.js";
 import connectDb from "./db/connect.js";
 // routers
 import authRoutes from "./routes/authRoutes.js";
+import usersRoutes from "./routes/usersRoutes.js";
 const app = express();
 // rest of packages
 import cookieParser from "cookie-parser";
@@ -16,11 +17,13 @@ import morgan from "morgan";
 app.use(express.json());
 app.use(morgan("tiny"));
 app.use(cookieParser());
+app.use(express.static("./public"));
 app.get("/", (req, res) => {
   console.log(req.cookies);
   res.send("e commerce");
 });
 app.use("/api/auth", authRoutes);
+app.use("/api/users", usersRoutes);
 app.use(notFound);
 app.use(errorHandler);
 const startServer = async () => {
