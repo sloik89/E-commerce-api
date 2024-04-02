@@ -4,7 +4,8 @@ const errorHandlerMiddleware = (err, req, res, next) => {
     statusCode: err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR,
     msg: err.message || "Something went wrong try again later",
   };
-
+  console.log(customError);
+  console.log(err.name);
   if (err.name === "ValidationError") {
     customError.msg = Object.values(err.errors)
       .map((item) => item.message)
@@ -19,7 +20,7 @@ const errorHandlerMiddleware = (err, req, res, next) => {
   }
 
   if (err.name === "CastError") {
-    customError.msg`No item found with id: ${err.value}`;
+    customError.msg = `No item found with id: ${err.value}`;
     customError.statusCode = 404;
   }
   return res.status(customError.statusCode).json({ msg: customError.msg });
