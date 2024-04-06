@@ -14,5 +14,5 @@ router
 router.route("/showme").get(authenticate, showCurrentUser);
 router.route("/:id").get(getSingleUser);
 router.route("/").post(updateUser);
-router.route("/updatepswd").post(updateUserPassword);
+router.route("/updatepswd").post(authenticate, updateUserPassword);
 export default router;
