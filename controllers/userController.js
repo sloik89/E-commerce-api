@@ -1,7 +1,8 @@
 import User from "../models/User.js";
 import { StatusCodes } from "http-status-codes";
 import { BadRequest, NotFound, UnauthenticatedError } from "../errors/index.js";
-
+import checkPermissions from "../utilis/checkPermission.js";
+import { attachCokkieToResponse } from "../utilis/jswt.js";
 const getAllUsers = async (req, res) => {
   console.log(req.user);
   const users = await User.find({ role: "user" }).select("-password");
@@ -16,13 +17,31 @@ const getSingleUser = async (req, res) => {
   if (!user) {
     throw new NotFound("User not found");
   }
+  checkPermissions(req.user, user._id);
   res.status(StatusCodes.OK).json(user);
 };
 const showCurrentUser = async (req, res) => {
   res.status(StatusCodes.OK).json(req.user);
 };
 const updateUser = async (req, res) => {
-  res.send("update user");
+  const { email, name } = req.body;
+  if (!email || !name) {
+    throw new BadRequest(`Please provide all values`);
+  }
+  const user = await User.findOneAndUpdate(
+    { _id: req.user._id },
+    { email, name },
+    { new: true, runValidators: true }
+  );
+  const userToken = {
+    name: user.name,
+    email: user.email,
+    password: user.password,
+    role: user.role,
+    _id: user._id,
+  };
+  attachCokkieToResponse(res, userToken);
+  res.status(StatusCodes.OK).json({ user: userToken });
 };
 const updateUserPassword = async (req, res) => {
   const { _id } = req.user;
@@ -42,7 +61,7 @@ const updateUserPassword = async (req, res) => {
   }
   user.password = password;
   await user.save();
-  console.log();
+
   res.status(StatusCodes.OK).json({ msg: "Password Updated" });
 };
 export {

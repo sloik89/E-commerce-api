@@ -12,7 +12,7 @@ router
   .route("/")
   .get(authenticate, checkIfAdmin("admin", "owner"), getAllUsers);
 router.route("/showme").get(authenticate, showCurrentUser);
-router.route("/:id").get(getSingleUser);
-router.route("/").post(updateUser);
+router.route("/:id").get(authenticate, getSingleUser);
+router.route("/").post(authenticate, updateUser);
 router.route("/updatepswd").post(authenticate, updateUserPassword);
 export default router;
