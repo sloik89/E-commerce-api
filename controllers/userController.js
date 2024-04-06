@@ -1,7 +1,7 @@
 import User from "../models/User.js";
 import { StatusCodes } from "http-status-codes";
-import BadRequest from "../errors/bad-request.js";
-import NotFound from "../errors/not-found.js";
+import { BadRequest, NotFound } from "../errors/index.js";
+
 const getAllUsers = async (req, res) => {
   console.log(req.user);
   const users = await User.find({ role: "user" }).select("-password");
@@ -19,7 +19,7 @@ const getSingleUser = async (req, res) => {
   res.status(StatusCodes.OK).json(user);
 };
 const showCurrentUser = async (req, res) => {
-  res.send("show current user");
+  res.status(StatusCodes.OK).json(req.user);
 };
 const updateUser = async (req, res) => {
   res.send("update user");

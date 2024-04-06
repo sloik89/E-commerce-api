@@ -1,6 +1,6 @@
 import { StatusCodes } from "http-status-codes";
 import { isTokenValid } from "../utilis/jswt.js";
-import UnauthenticatedError from "../errors/unauthenticate.js";
+import { UnauthenticatedError, UnothorizedError } from "../errors/index.js";
 const authenticate = async (req, res, next) => {
   const { token } = req.cookies;
   if (!token) {
@@ -19,4 +19,13 @@ const authenticate = async (req, res, next) => {
     throw new UnauthenticatedError("Authenticate Invalid");
   }
 };
-export default authenticate;
+const checkIfAdmin = (...rest) => {
+  console.log(rest);
+  return (req, res, next) => {
+    if (!rest.includes(req.user.role)) {
+      throw new UnothorizedError("Unauthorized to acces this route");
+    }
+    next();
+  };
+};
+export { authenticate, checkIfAdmin };
