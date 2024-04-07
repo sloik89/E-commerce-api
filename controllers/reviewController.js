@@ -21,10 +21,17 @@ const createReview = async (req, res) => {
   res.status(StatusCodes.CREATED).json({ review });
 };
 const getAllReviews = async (req, res) => {
-  res.send("getAllReviews");
+  const reviews = await Review.find({});
+  res.status(StatusCodes.OK).json(reviews);
 };
 const getSingleReview = async (req, res) => {
-  res.send("getSingleReview");
+  const { id: reviewId } = req.params;
+  console.log(reviewId);
+  const review = await Review.findById(reviewId);
+  if (!review) {
+    throw new BadRequest(`No review with id ${reviewId}`);
+  }
+  res.status(StatusCodes.OK).json(review);
 };
 const updateReview = async (req, res) => {
   res.send("updateReview");
