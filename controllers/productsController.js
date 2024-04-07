@@ -4,8 +4,8 @@ import path from "path";
 import { BadRequest, NotFound } from "../errors/index.js";
 const createProduct = async (req, res) => {
   req.body.user = req.user._id;
+  console.log(req.body);
   const product = await Product.create(req.body);
-  console.log(product);
 
   res.status(StatusCodes.OK).json({ msg: "product created" });
 };
@@ -17,7 +17,7 @@ const getSingleProduct = async (req, res) => {
   console.log("get single");
   const { id: productId } = req.params;
   console.log(productId);
-  const product = await Product.findOne({ _id: productId });
+  const product = await Product.findOne({ _id: productId }).populate("reviews");
   console.log(product);
 
   res.status(StatusCodes.OK).json(product);
