@@ -22,10 +22,23 @@ const getSingleProduct = async (req, res) => {
   res.status(StatusCodes.OK).json(product);
 };
 const updateProduct = async (req, res) => {
-  res.send("updateProduct");
+  const { id } = req.params;
+  const product = await Product.findOneAndUpdate({ _id: id }, req.body, {
+    new: true,
+    runValidators: true,
+  });
+  console.log(product);
+  res.status(StatusCodes.OK).json({ product });
 };
 const deleteProduct = async (req, res) => {
-  res.send("deleteProduct");
+  const { id } = req.params;
+  const product = await Product.findOne({ _id: id });
+  if (!product) {
+    throw new NotFound("Can find product");
+  }
+  console.log(product);
+  await product.deleteOne();
+  res.status(StatusCodes.OK).json({ msg: "product remove" });
 };
 const uploadImage = async (req, res) => {
   res.send("uploadImage");
