@@ -15,9 +15,11 @@ const app = express();
 // rest of packages
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
+import fileUpload from "express-fileupload";
 app.use(express.json());
 app.use(morgan("tiny"));
 app.use(cookieParser());
+app.use(fileUpload());
 app.use(express.static("./public"));
 app.get("/", (req, res) => {
   console.log(req.cookies);
