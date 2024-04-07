@@ -11,6 +11,7 @@ import connectDb from "./db/connect.js";
 import authRoutes from "./routes/authRoutes.js";
 import usersRoutes from "./routes/usersRoutes.js";
 import productsRoutes from "./routes/productsRoutes.js";
+import reviewRoutes from "./routes/reviewRoutes.js";
 const app = express();
 // rest of packages
 import cookieParser from "cookie-parser";
@@ -28,6 +29,7 @@ app.get("/", (req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/users", usersRoutes);
 app.use("/api/products", productsRoutes);
+app.use("/api/reviews", reviewRoutes);
 app.use(notFound);
 app.use(errorHandler);
 const startServer = async () => {
