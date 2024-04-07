@@ -58,14 +58,22 @@ const deleteReview = async (req, res) => {
     throw new NotFound(`No review found with ${reviewId}`);
   }
   checkPermissions(req.user, review.user);
-  console.log(review);
+
   await review.deleteOne();
   res.status(StatusCodes.OK).json({ msg: "review removed" });
 };
+// alternative aproach on reviews on single product
+const getSingleProductReview = async (req, res) => {
+  const { id: productId } = req.params;
+  const reviews = await Review.find({ product: productId });
+  res.status(StatusCodes.OK).json({ reviews, count: reviews.length });
+};
+
 export {
   createReview,
   getAllReviews,
   getSingleReview,
   updateReview,
   deleteReview,
+  getSingleProductReview,
 };

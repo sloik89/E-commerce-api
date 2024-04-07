@@ -37,7 +37,7 @@ const deleteProduct = async (req, res) => {
   if (!product) {
     throw new NotFound("Can find product");
   }
-  console.log(product);
+
   await product.deleteOne();
   res.status(StatusCodes.OK).json({ msg: "product remove" });
 };

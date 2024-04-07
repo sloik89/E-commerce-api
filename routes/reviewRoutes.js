@@ -6,6 +6,7 @@ import {
   getSingleReview,
   updateReview,
   deleteReview,
+  getSingleProductReview,
 } from "../controllers/reviewController.js";
 import { authenticate, checkIfAdmin } from "../middleware/authenticate.js";
 const router = express.Router();
@@ -15,4 +16,5 @@ router
   .get(authenticate, getSingleReview)
   .patch(authenticate, updateReview)
   .delete(authenticate, deleteReview);
+router.route("/:id/review").get(getSingleProductReview);
 export default router;
