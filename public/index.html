@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<!-- https://e-commerce-api-otdo.onrender.com/ -->
 
 <head>
     <meta charset="UTF-8">
@@ -9,14 +10,57 @@
 </head>
 
 <body>
-    <div class="form-container">
-        <form class="form">
-            <input class="email" type="email">
-            <input class="password" type="password" name="" id="">
-            <button type="submit" class="btn">Login</button>
-        </form>
-        <button class="btn-test">Test login</button>
-        <button class="logout">Logout</button>
+    <div class="routes-container">
+
+        <nav class="nav-routes flex-column">
+            <h1>E commerce api</h1>
+            <div class="container flex-column">
+                <h3 class="routes-title">Auth </h3>
+                <div class="auth-links flex-column">
+                    <a href="#auth">login user</a>
+                    <a href="#auth">register user</a>
+                    <a href="#auth">logout user</a>
+                </div>
+            </div>
+            <div class="container flex-column">
+                <h3 class="routes-title">Order </h3>
+                <div class="auth-links flex-column">
+                    <a href="#auth">Create Order</a>
+                    <a href="#auth">Get All Orders</a>
+                    <a href="#auth">Get Single Order</a>
+                    <a href="#auth">Show current User orders</a>
+                    <a href="#auth">Update Order</a>
+                </div>
+
+            </div>
+            <div class="container flex-column">
+                <h3 class="routes-title">Product </h3>
+                <div class="auth-links flex-column">
+                    <a href="#auth">Create Product</a>
+                    <a href="#auth">Delete Product</a>
+                    <a href="#auth">Get Single Product</a>
+                    <a href="#auth">Get All Products</a>
+                    <a href="#auth">Update Product</a>
+                </div>
+
+            </div>
+
+        </nav>
+        <div class="api">
+            <div class="auth" id="auth">
+                <h3>Auth</h3>
+                <p class="desc">Authenticate User</p>
+                <div class="route flex-center">
+                    <p class="login">Login User</p>
+                    <span class="method">POST</span>
+                    <a href=" https://e-commerce-api-otdo.onrender.com/api/auth/login">
+                        https://e-commerce-api-otdo.onrender.com/api/auth/login
+                    </a>
+
+
+                </div>
+            </div>
+        </div>
     </div>
     <script src="./script.js"></script>
 </body>

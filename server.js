@@ -38,7 +38,7 @@ app.use(xss());
 app.use(mongoSanitize());
 app.use(cookieParser());
 app.use(fileUpload());
-// app.use(express.static("./public"));
+app.use(express.static("./public"));
 app.get("/", (req, res) => {
   res.send("e commerce");
 });
