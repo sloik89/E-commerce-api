@@ -16,7 +16,8 @@ const attachCokkieToResponse = (res, userToken) => {
   res.cookie("token", token, {
     httpOnly: true,
     expires: new Date(Date.now() + oneDay),
-    secure: true,
+    secure: false,
+    signed: true,
   });
 };
 export { createJWT, isTokenValid, attachCokkieToResponse };
