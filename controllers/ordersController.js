@@ -2,19 +2,34 @@ import { BadRequest, NotFound } from "../errors/index.js";
 import { StatusCodes } from "http-status-codes";
 import Review from "../models/Review.js";
 import Product from "../models/Product.js";
+import checkPermissions from "../utilis/checkPermission.js";
 import Order from "../models/Orders.js";
 const fakeStripeApi = async ({ amount, currency }) => {
   const client_secret = "someRandomValue";
   return { client_secret, amount };
 };
 const getAllOrders = async (req, res) => {
-  res.send("getAllORders");
+  const orders = await Order.find({});
+  res.status(StatusCodes.OK).json(orders);
 };
 const getSingleOrder = async (req, res) => {
-  res.send("getSIngleORder");
+  const { id } = req.params;
+
+  const order = await Order.findOne({ _id: id });
+  if (!order) {
+    throw new NotFound(`order with id: ${id}`);
+  }
+  checkPermissions(req.user, order.user);
+  res.status(StatusCodes.OK).json(order);
 };
 const getCurrentUserOrder = async (req, res) => {
-  res.send("getCurrentUserOrder");
+  const { _id } = req.user;
+  const order = await Order.find({ user: _id });
+  if (!order) {
+    throw new NotFound(`No orders found`);
+  }
+
+  res.status(StatusCodes.OK).json(order);
 };
 const createOrder = async (req, res) => {
   const { cartItems, tax, shippingFee } = req.body;
@@ -61,7 +76,18 @@ const createOrder = async (req, res) => {
     .json({ order, clientSecret: order.clientSecret });
 };
 const updateOrder = async (req, res) => {
-  res.send("updateOrder");
+  const { id: orderId } = req.params;
+  console.log(orderId);
+  const { paymentIntentId } = req.body;
+  const order = await Order.findOne({ _id: orderId });
+  if (!order) {
+    throw new NotFound(`No orders found with id:${orderId}`);
+  }
+  checkPermissions(req.user, order.user);
+  order.paymentIntentId = paymentIntentId;
+  order.status = "paid";
+  await order.save();
+  res.status(StatusCodes.OK).json({ order });
 };
 export {
   updateOrder,
