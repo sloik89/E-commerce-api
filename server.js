@@ -18,13 +18,28 @@ const app = express();
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
 import fileUpload from "express-fileupload";
+import rateLimiter from "express-rate-limit";
+import helmet from "helmet";
+import cors from "cors";
+import mongoSanitize from "express-mongo-sanitize";
+import xss from "xss-clean";
 app.use(express.json());
 app.use(morgan("tiny"));
+app.set("trust proxy", 1);
+app.use(
+  rateLimiter({
+    windowMs: 15 * 60 * 1000,
+    max: 60,
+  })
+);
+app.use(helmet());
+app.use(cors());
+app.use(xss());
+app.use(mongoSanitize());
 app.use(cookieParser());
 app.use(fileUpload());
-app.use(express.static("./public"));
+// app.use(express.static("./public"));
 app.get("/", (req, res) => {
-  console.log(req.cookies);
   res.send("e commerce");
 });
 app.use("/api/auth", authRoutes);
