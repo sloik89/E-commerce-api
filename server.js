@@ -12,6 +12,7 @@ import authRoutes from "./routes/authRoutes.js";
 import usersRoutes from "./routes/usersRoutes.js";
 import productsRoutes from "./routes/productsRoutes.js";
 import reviewRoutes from "./routes/reviewRoutes.js";
+import ordersRoutes from "./routes/ordersRoutes.js";
 const app = express();
 // rest of packages
 import cookieParser from "cookie-parser";
@@ -30,6 +31,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", usersRoutes);
 app.use("/api/products", productsRoutes);
 app.use("/api/reviews", reviewRoutes);
+app.use("/api/orders", ordersRoutes);
 app.use(notFound);
 app.use(errorHandler);
 const startServer = async () => {
