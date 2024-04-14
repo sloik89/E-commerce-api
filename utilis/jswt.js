@@ -14,9 +14,10 @@ const attachCokkieToResponse = (res, userToken) => {
 
   const oneDay = 1000 * 60 * 60 * 24;
   res.cookie("token", token, {
-    httpOnly: false,
+    httpOnly: true,
     expires: new Date(Date.now() + oneDay),
-    secure: false,
+    secure: true,
+    path: "/",
     signed: true,
     sameSite: "none",
   });
