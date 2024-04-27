@@ -17,9 +17,7 @@ const attachCokkieToResponse = (res, userToken) => {
     httpOnly: true,
     expires: new Date(Date.now() + oneDay),
     secure: true,
-    path: "/",
     signed: true,
-    sameSite: "none",
   });
 };
 export { createJWT, isTokenValid, attachCokkieToResponse };

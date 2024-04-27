@@ -2,7 +2,7 @@ import { StatusCodes } from "http-status-codes";
 import { isTokenValid } from "../utilis/jswt.js";
 import { UnauthenticatedError, UnothorizedError } from "../errors/index.js";
 const authenticate = async (req, res, next) => {
-  const { token } = req.cookies;
+  const { token } = req.signedCookies;
   if (!token) {
     throw new UnauthenticatedError("Authenticate Invalid");
   }
