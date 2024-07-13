@@ -26,12 +26,12 @@ import xss from "xss-clean";
 app.use(express.json());
 app.use(morgan("tiny"));
 app.set("trust proxy", 1);
-app.use(
-  rateLimiter({
-    windowMs: 15 * 60 * 1000,
-    max: 60,
-  })
-);
+// app.use(
+//   rateLimiter({
+//     windowMs: 15 * 60 * 1000,
+//     max: 60,
+//   })
+// );
 app.use(helmet());
 app.use(cors());
 app.use(xss());
