@@ -23,7 +23,6 @@ const register = async (req, res) => {
   res.status(StatusCodes.CREATED).json({ user: userToken });
 };
 const login = async (req, res) => {
-  console.log(req.body);
   const { email, password } = req.body;
   if (!email || !password) {
     throw new BadRequest("Please provide email or password");
@@ -46,7 +45,9 @@ const login = async (req, res) => {
   };
 
   attachCokkieToResponse(res, userToken);
-  res.status(StatusCodes.OK).json({ msg: "login succesfull" });
+  res
+    .status(StatusCodes.OK)
+    .json({ msg: "login succesfull", user: { username: user.name } });
 };
 const logout = async (req, res) => {
   const verify = jwt.verify(req.cookies.token, process.env.JWT_SECRET);
