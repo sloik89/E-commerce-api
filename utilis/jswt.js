@@ -18,7 +18,7 @@ const attachCokkieToResponse = (res, userToken) => {
     expires: new Date(Date.now() + oneDay),
     secure: true,
     signed: true,
-    sameSite: "none",
+    sameSite: "lax",
     domain: "https://deployreadye-store.onrender.com/",
   });
 };
