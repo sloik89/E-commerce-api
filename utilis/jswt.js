@@ -19,6 +19,7 @@ const attachCokkieToResponse = (res, userToken) => {
     secure: true,
     signed: true,
     sameSite: "none",
+    domain: "https://deployreadye-store.onrender.com/",
   });
 };
 export { createJWT, isTokenValid, attachCokkieToResponse };
