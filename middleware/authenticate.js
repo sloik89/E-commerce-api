@@ -3,6 +3,7 @@ import { isTokenValid } from "../utilis/jswt.js";
 import { UnauthenticatedError, UnothorizedError } from "../errors/index.js";
 const authenticate = async (req, res, next) => {
   const { token } = req.signedCookies;
+  console.log("token is" + token);
   if (!token) {
     throw new UnauthenticatedError("Authenticate Invalid");
   }
