@@ -33,12 +33,7 @@ app.set("trust proxy", 1);
 //   })
 // );
 app.use(helmet());
-app.use(
-  cors({
-    origin: "https://deployreadye-store.onrender.com/",
-    credentials: true,
-  })
-);
+app.use(cors());
 app.use(xss());
 app.use(mongoSanitize());
 app.use(cookieParser(process.env.JWT_SECRET));
