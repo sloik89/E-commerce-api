@@ -18,8 +18,8 @@ const attachCokkieToResponse = (res, userToken) => {
     expires: new Date(Date.now() + oneDay),
     secure: true,
     signed: true,
-    sameSite: "lax",
-    domain: "https://deployreadye-store.onrender.com/",
+    sameSite: "none",
+    // domain: "https://deployreadye-store.onrender.com/",
   });
 };
 export { createJWT, isTokenValid, attachCokkieToResponse };
