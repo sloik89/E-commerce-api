@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import { StatusCodes } from "http-status-codes";
+import { BadRequest, UnauthenticatedError } from "../errors/index.js";
 const createJWT = (payload) => {
   const token = jwt.sign(payload, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_LIFETIME,
@@ -22,4 +23,17 @@ const attachCokkieToResponse = (res, userToken) => {
     // domain: "https://deployreadye-store.onrender.com/",
   });
 };
-export { createJWT, isTokenValid, attachCokkieToResponse };
+const configureBearerToken = async (req, userToken) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader || !authHeader.startWith("Bearer ")) {
+    console.log(authHeader);
+    throw new BadRequest("token error");
+  }
+  return authHeader;
+};
+export {
+  createJWT,
+  isTokenValid,
+  attachCokkieToResponse,
+  configureBearerToken,
+};

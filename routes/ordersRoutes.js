@@ -1,6 +1,10 @@
 import express from "express";
 const router = express.Router();
-import { authenticate, checkIfAdmin } from "../middleware/authenticate.js";
+import {
+  authenticate,
+  checkIfAdmin,
+  authenticateBearerToken,
+} from "../middleware/authenticate.js";
 import {
   updateOrder,
   createOrder,
@@ -12,7 +16,9 @@ router
   .route("/")
   .get(authenticate, checkIfAdmin("admin"), getAllOrders)
   .post(authenticate, createOrder);
-router.route("/showAllMyOrder").get(authenticate, getCurrentUserOrder);
+router
+  .route("/showAllMyOrder")
+  .get(authenticateBearerToken, getCurrentUserOrder);
 router
   .route("/:id")
   .get(authenticate, getSingleOrder)

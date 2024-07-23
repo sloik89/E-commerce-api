@@ -1,7 +1,11 @@
 import { BadRequest, UnauthenticatedError } from "../errors/index.js";
 import jwt from "jsonwebtoken";
 import { StatusCodes } from "http-status-codes";
-import { attachCokkieToResponse } from "../utilis/jswt.js";
+import {
+  attachCokkieToResponse,
+  configureBearerToken,
+  createJWT,
+} from "../utilis/jswt.js";
 import User from "../models/User.js";
 const register = async (req, res) => {
   const { email, name, password } = req.body;
@@ -43,11 +47,13 @@ const login = async (req, res) => {
     role: user.role,
     _id: user._id,
   };
+  const token = createJWT(userToken);
+  console.log(token);
 
-  attachCokkieToResponse(res, userToken);
+  // attachCokkieToResponse(res, userToken);
   res
     .status(StatusCodes.OK)
-    .json({ msg: "login succesfull", user: { username: user.name } });
+    .json({ msg: "login succesfull", user: { username: user.name, token } });
 };
 const logout = async (req, res) => {
   const verify = jwt.verify(req.cookies.token, process.env.JWT_SECRET);
