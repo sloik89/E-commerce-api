@@ -3,11 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import Review from "../models/Review.js";
 import Product from "../models/Product.js";
 import checkPermissions from "../utilis/checkPermission.js";
-import {
-  attachCokkieToResponse,
-  configureBearerToken,
-  createJWT,
-} from "../utilis/jswt.js";
+
 import Order from "../models/Orders.js";
 const fakeStripeApi = async ({ amount, currency }) => {
   const client_secret = "someRandomValue";
@@ -27,7 +23,7 @@ const getSingleOrder = async (req, res) => {
   checkPermissions(req.user, order.user);
   res.status(StatusCodes.OK).json(order);
 };
-const getCurrentUserOrder = async (req, res) => {
+const getCurrentUserOrders = async (req, res) => {
   const { _id } = req.user;
 
   const countSearchedProducts = await Order.find({
@@ -123,7 +119,7 @@ const updateOrder = async (req, res) => {
 export {
   updateOrder,
   createOrder,
-  getCurrentUserOrder,
+  getCurrentUserOrders,
   getSingleOrder,
   getAllOrders,
 };

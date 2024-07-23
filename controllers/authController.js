@@ -1,11 +1,7 @@
 import { BadRequest, UnauthenticatedError } from "../errors/index.js";
 import jwt from "jsonwebtoken";
 import { StatusCodes } from "http-status-codes";
-import {
-  attachCokkieToResponse,
-  configureBearerToken,
-  createJWT,
-} from "../utilis/jswt.js";
+import { createJWT } from "../utilis/jswt.js";
 import User from "../models/User.js";
 const register = async (req, res) => {
   const { email, name, password } = req.body;
@@ -22,7 +18,7 @@ const register = async (req, res) => {
     role: user.role,
     _id: user._id,
   };
-  attachCokkieToResponse(res, userToken);
+  // attachCokkieToResponse(res, userToken);
 
   res.status(StatusCodes.CREATED).json({ user: userToken });
 };
@@ -48,7 +44,6 @@ const login = async (req, res) => {
     _id: user._id,
   };
   const token = createJWT(userToken);
-  console.log(token);
 
   // attachCokkieToResponse(res, userToken);
   res

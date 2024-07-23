@@ -8,17 +8,17 @@ import {
 import {
   updateOrder,
   createOrder,
-  getCurrentUserOrder,
+  getCurrentUserOrders,
   getSingleOrder,
   getAllOrders,
 } from "../controllers/ordersController.js";
 router
   .route("/")
   .get(authenticate, checkIfAdmin("admin"), getAllOrders)
-  .post(authenticate, createOrder);
+  .post(authenticateBearerToken, createOrder);
 router
   .route("/showAllMyOrder")
-  .get(authenticateBearerToken, getCurrentUserOrder);
+  .get(authenticateBearerToken, getCurrentUserOrders);
 router
   .route("/:id")
   .get(authenticate, getSingleOrder)
