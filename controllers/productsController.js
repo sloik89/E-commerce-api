@@ -71,7 +71,7 @@ const getAllProducts = async (req, res) => {
   ).countDocuments();
 
   const page = Number(req.query.page) || 1;
-  const limit = Number(req.query.limit) || 3;
+  const limit = Number(req.query.limit) || 6;
   const skip = (page - 1) * limit;
   const pages = Math.ceil(countSearchedProducts / limit);
   result = result.skip(skip).limit(limit);
