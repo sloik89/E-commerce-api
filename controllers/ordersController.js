@@ -55,7 +55,7 @@ const getCurrentUserOrders = async (req, res) => {
 
   res.status(StatusCodes.OK).json({
     order,
-    meta: { pagination: { total: order.length, page, pages } },
+    meta: { pagination: { total: countSearchedProducts, page, pages } },
   });
 };
 const createOrder = async (req, res) => {
